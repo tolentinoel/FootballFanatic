@@ -1,0 +1,1 @@
+outkast = Artist.new("Outkast")
