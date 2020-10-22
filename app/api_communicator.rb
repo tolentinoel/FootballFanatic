@@ -1,6 +1,7 @@
 require 'rest-client'
 require 'json'
 require 'pry'
+# require '../app/team.rb'
 
 def get_main_hash
     response_string = RestClient.get('https://app.ticketmaster.com/discovery/v2/events?apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0&locale=*')
@@ -39,13 +40,6 @@ def gets_games_by_date(date)
 end
 
 
-
-# def get_date_by_game(name)
-#     all_games.each do |games|
-#         games["name"]
-#     end
-# end
-
 def gets_schedule_by_team(team)
     team_schedule = []
     all_games.each do |games|
@@ -59,8 +53,6 @@ def gets_schedule_by_team(team)
     puts team_schedule
 end
 # gets_schedule_by_team("Philadelphia Eagles")
-
-
 
 def gets_games_by_stadium(stadium)
     all_games_at_stadium = []
@@ -81,193 +73,3 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# binding.pry
