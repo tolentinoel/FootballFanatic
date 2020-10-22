@@ -12,7 +12,7 @@ class CLI
         puts "3. Find a game schedule for a given team"
         puts "4. Find all games hosted by a given stadium"
         puts "5. Exit"
-        puts 
+        puts
         input = get_user_input
         if input == "1"
             puts "Which city?"
@@ -32,12 +32,12 @@ class CLI
         gets_games_by_stadium(stadium)
         elsif input == "5"
             exit
-        else 
+        else
             puts "Invalid entry, please try again."
         end
         puts
         return self.main_menu
-    end 
+    end
 
 
 
