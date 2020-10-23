@@ -13,7 +13,7 @@ def get_obj_from_hash
         stadia = Stadia.create(name: games["_embedded"]["venues"][0]["name"],
         city: games["_embedded"]["venues"][0]["city"]["name"])
         # binding.pry
-        date = games["dates"]["start"]["localDate"]
+        date = games["dates"]["start"]["localDate"].to_str
         Game.create({home_team: home, away_team: away, stadium_id: stadia.id, date: date})
     end
 end
