@@ -3,7 +3,7 @@ require_relative "../config/environment"
 class CLI
 
     def welcome
-        puts "Welcome to Ticketmaster"
+        puts "Welcome to the FootballFanatic app!"
     end
 
     def main_menu
