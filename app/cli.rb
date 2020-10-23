@@ -19,19 +19,19 @@ class CLI
         if input == "1"
             puts "Which city?"
         city = get_user_input
-        gets_stadiums_by_city(city)
+        APICommunicator.gets_stadiums_by_city(city)
         elsif input == "2"
             puts "What date? Please use YYYY-MM-DD format."
         date = get_user_input
-        gets_games_by_date(date)
+        APICommunicator.gets_games_by_date(date)
         elsif input == "3"
             puts "Which team?"
         team = get_user_input
-        gets_schedule_by_team(team)
+        APICommunicator.gets_schedule_by_team(team)
         elsif input == "4"
             puts "Which stadium?"
         stadium = get_user_input
-        gets_games_by_stadium(stadium)
+        APICommunicator.gets_games_by_stadium(stadium)
         elsif input == "5"
             exit
         else

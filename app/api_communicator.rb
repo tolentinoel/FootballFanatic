@@ -3,7 +3,7 @@ require 'json'
 require 'pry'
 require_relative '../config/environment'
 
-# class APICommunicator
+class APICommunicator
 
 
     def get_main_hash
@@ -15,7 +15,7 @@ require_relative '../config/environment'
         get_main_hash["_embedded"]["events"]
     end
 
-    def gets_stadiums_by_city(city)
+    def self.gets_stadiums_by_city(city)
         if  stadium = Stadia.find_by(city: city)
             city == stadium["city"]
             puts "========================"
@@ -26,7 +26,7 @@ require_relative '../config/environment'
         end
     end
 
-    def gets_games_by_date(date)
+    def self.gets_games_by_date(date)
         # binding.pry
         if  games = Game.find_by(date: date)
             date == games["date"].to_s.delete_suffix(' 00:00:00 UTC')
@@ -43,7 +43,7 @@ require_relative '../config/environment'
         end
     end
 
-    def gets_schedule_by_team(team)
+    def self.gets_schedule_by_team(team)
         if result = Team.find_by(name: team)
             if result.id.even? == true
                 # binding.pry
@@ -79,7 +79,7 @@ require_relative '../config/environment'
         end
     end
 
-    def gets_games_by_stadium(stadium)
+    def self.gets_games_by_stadium(stadium)
         if stadium_obj = Stadia.find_by(name: stadium)
             stadium == stadium_obj["name"]
             var = Game.find_by(stadium_id: stadium_obj.id)["away_team_id"]
@@ -161,4 +161,4 @@ require_relative '../config/environment'
     # end
     # gets_games_by_stadium("Raymond James Stadium")
 
-# end
+end
