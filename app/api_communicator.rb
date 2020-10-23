@@ -2,6 +2,7 @@ require 'rest-client'
 require 'json'
 require 'pry'
 require_relative '../config/environment'
+require "colorize"
 
 class APICommunicator
 
@@ -17,11 +18,11 @@ class APICommunicator
     def self.gets_stadiums_by_city(city)
         if  stadium = Stadia.find_by(city: city)
             city == stadium["city"]
-            puts "========================"
-            puts stadium["name"]
+            puts "========================".colorize(:green)
+            puts stadium["name"].colorize(:green)
         else 
-            puts "========================"
-            puts "No stadiums found in this city."
+            puts "========================".colorize(:green)
+            puts "No stadiums found in this city.".colorize(:red)
         end
     end
 
@@ -34,11 +35,11 @@ class APICommunicator
             home_team_name = Team.find_by(id: home_team_id)["name"]
             away_team_id = Game.find_by(date: date)["away_team_id"]
             away_team_name = Team.find_by(id: away_team_id)["name"]
-            puts "========================"
-            puts "#{home_team_name} vs. #{away_team_name}"
+            puts "========================".colorize(:green)
+            puts "#{home_team_name} vs. #{away_team_name}".colorize(:green)
         else 
-            puts "========================"
-            puts "No games found on this date."
+            puts "========================".colorize(:green)
+            puts "No games found on this date.".colorize(:red)
         end
     end
 
@@ -56,10 +57,10 @@ class APICommunicator
                 away_team_id = home_games_obj["away_team_id"]
                 away_team_name = Team.find_by(id: away_team_id)["name"]
                 date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
-                puts "Game Schedule"
-                puts "========================"
-                puts "#{date}"
-                puts "#{result.name} vs. #{home_team_name}"
+                puts "Game Schedule".colorize(:green)
+                puts "========================".colorize(:green)
+                puts "#{date}".colorize(:green)
+                puts "#{result.name} vs. #{home_team_name}".colorize(:green)
                 
                 else
                 home_games_obj = Game.find_by(home_team_id: result.id)
@@ -70,13 +71,13 @@ class APICommunicator
                 home_team_id = away_games_obj["home_team_id"]
                 home_team_name = Team.find_by(id: home_team_id)["name"]
                 date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
-                puts "Game Schedule"
-                puts "========================"
-                puts "#{date}"
-                puts "#{result.name} vs. #{away_team_name}"
+                puts "Game Schedule".colorize(:green)
+                puts "========================".colorize(:green)
+                puts "#{date}".colorize(:green)
+                puts "#{result.name} vs. #{away_team_name}".colorize(:green)
             end 
-        else puts "========================"
-            puts "No games found for this team."
+        else puts "========================".colorize(:red)
+            puts "No games found for this team.".colorize(:red)
         end
     end
 
@@ -88,12 +89,12 @@ class APICommunicator
             var2 = Game.find_by(stadium_id: stadium_obj.id)["home_team_id"]
             home_team = Team.find_by(id: var2)["name"]
             the_date = Game.find_by(stadium_id: stadium_obj.id)["date"]
-            puts "========================"
-            puts "#{home_team} vs. #{away_team}"
-            puts "#{the_date}"
+            puts "========================".colorize(:green)
+            puts "#{home_team} vs. #{away_team}".colorize(:green)
+            puts "#{the_date}".colorize(:green)
         else 
-            puts "========================"
-            puts "No games found at this stadium."
+            puts "========================".colorize(:red)
+            puts "No games found at this stadium.".colorize(:red)
         end
     end
 
