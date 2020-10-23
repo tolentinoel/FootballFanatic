@@ -18,8 +18,6 @@ def get_obj_from_hash
     end
 end
 
-
-
 get_obj_from_hash
 
 # def get_all_teams

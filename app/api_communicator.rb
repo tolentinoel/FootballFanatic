@@ -5,7 +5,6 @@ require_relative '../config/environment'
 
 class APICommunicator
 
-
     def get_main_hash
         response_string = RestClient.get('https://app.ticketmaster.com/discovery/v2/events?apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0&locale=*')
         response_hash = JSON.parse(response_string)
@@ -46,11 +45,13 @@ class APICommunicator
     def self.gets_schedule_by_team(team)
         if result = Team.find_by(name: team)
             if result.id.even? == true
+                #Is the given team the away team? If not, sends to else statement
                 # binding.pry
                 away_games_obj = Game.find_by(away_team_id: result.id)
                 home_team_id = away_games_obj["home_team_id"]
                 home_team_name = Team.find_by(id: home_team_id)["name"]
-                #If I'm searching for away team results, I need to decrement the result.id by 1
+                #If I'm searching for away team results, I need to decrement the result.id by 1 so that home_game_obj != nil
+                #Code written to accomodate how the database is set up
                 home_games_obj = Game.find_by(home_team_id: result.id-1)
                 away_team_id = home_games_obj["away_team_id"]
                 away_team_name = Team.find_by(id: away_team_id)["name"]
