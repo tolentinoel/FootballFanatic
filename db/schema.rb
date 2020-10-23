@@ -13,9 +13,9 @@
 ActiveRecord::Schema.define(version: 3) do
 
   create_table "games", force: :cascade do |t|
-    t.string "name"
-    t.string "city"
-    t.string "stadium"
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.integer "stadium_id"
     t.datetime "date"
   end
 

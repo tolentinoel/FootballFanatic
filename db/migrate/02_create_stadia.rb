@@ -1,4 +1,4 @@
-class CreateStadium < ActiveRecord::Migration[4.2]
+class CreateStadia < ActiveRecord::Migration[4.2]
 
     def change
         create_table :stadia do |t|
