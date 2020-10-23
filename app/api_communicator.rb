@@ -33,23 +33,45 @@ require_relative '../config/environment'
             away_team_name = Team.find_by(id: away_team_id)["name"]
             puts "#{home_team_name} vs. #{away_team_name}"
         end
-        # game = Game.find_by(date: date)
-        # # binding.pry
-        # if date == game["date"]
-        # puts game["home_team_id"]
-        # end
     end
 
     def gets_schedule_by_team(team)
-        game = Game.find_by(team)
-        if team == game["team"]
-            puts game["date"]
+        result = Team.find_by(name: team)
+        if result.id.even? == true
+            # binding.pry
+            away_games_obj = Game.find_by(away_team_id: result.id)
+            home_team_id = away_games_obj["home_team_id"]
+            home_team_name = Team.find_by(id: home_team_id)["name"]
+            #If I'm searching for away team results, I need to decrement the result.id by 1
+            home_games_obj = Game.find_by(home_team_id: result.id-1)
+            away_team_id = home_games_obj["away_team_id"]
+            away_team_name = Team.find_by(id: away_team_id)["name"]
+            date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
+            puts "Game Schedule"
+            puts "============="
+            puts "#{date}"
+            puts "#{result.name} vs. #{home_team_name}"
+            
+            else
+            home_games_obj = Game.find_by(home_team_id: result.id)
+            away_team_id = home_games_obj["away_team_id"]
+            away_team_name = Team.find_by(id: away_team_id)["name"]
+            #If I'm searching for away team results, I need to increment the result.id by 1
+            away_games_obj = Game.find_by(away_team_id: result.id+1)
+            home_team_id = away_games_obj["home_team_id"]
+            home_team_name = Team.find_by(id: home_team_id)["name"]
+            date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
+            puts "Game Schedule"
+            puts "============="
+            puts "#{date}"
+            puts "#{result.name} vs. #{away_team_name}"
         end
+
     end
 
     def gets_games_by_stadium(stadium)
         stadium_obj = Stadia.find_by(name: stadium)
-        if stadium == stadium_obj["name"] 
+        if stadium == stadium_obj["name"]
             var = Game.find_by(stadium_id: stadium_obj.id)["away_team_id"]
             away_team = Team.find_by(id: var)["name"]
             var2 = Game.find_by(stadium_id: stadium_obj.id)["home_team_id"]
@@ -57,7 +79,7 @@ require_relative '../config/environment'
             the_date = Game.find_by(stadium_id: stadium_obj.id)["date"]
             puts "#{home_team} vs. #{away_team}"
             puts "#{the_date}"
-        end 
+        end
     end
 
 
@@ -79,7 +101,7 @@ require_relative '../config/environment'
     # def gets_stadiums_by_city(city)
     #     Stadium.find_by city: city
     #     # binding.pry
-    # end 
+    # end
     # gets_stadiums_by_city("Houston")
 
     # def gets_games_by_date(date)
@@ -101,7 +123,7 @@ require_relative '../config/environment'
     #         game_teams = games["name"].split(" vs. ")
     #         if game_teams.include?(team)
     #             team_schedule << games["dates"]["start"]["localDate"]
-    #             team_schedule << games["name"]  
+    #             team_schedule << games["name"]
     #         end
     #     end
     #     puts
@@ -125,4 +147,4 @@ require_relative '../config/environment'
     # end
     # gets_games_by_stadium("Raymond James Stadium")
 
-# end 
+# end
