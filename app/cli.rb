@@ -21,7 +21,7 @@ class CLI
         city = get_user_input
         gets_stadiums_by_city(city)
         elsif input == "2"
-            puts "What date? Please use YYYY-MMDD format."
+            puts "What date? Please use YYYY-MM-DD format."
         date = get_user_input
         gets_games_by_date(date)
         elsif input == "3"
@@ -40,8 +40,6 @@ class CLI
         puts
         return self.main_menu
     end
-
-
 
     def get_user_input
         gets.chomp
