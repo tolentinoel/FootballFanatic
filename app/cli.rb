@@ -6,12 +6,15 @@ class CLI
     def welcome
         puts
         puts
+        fork{ exec 'afplay', "lib/William_Rosati_Floating_Also.mp3" }
+        # `afplay 'lib/William_Rosati_Floating_Also.mp3'`
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
         puts "
     █▀▀ █▀█ █▀█ ▀█▀ █▄▄ ▄▀█ █░░ █░░ █▀▀ ▄▀█ █▄░█ ▄▀█ ▀█▀ █ █▀▀
     █▀░ █▄█ █▄█ ░█░ █▄█ █▀█ █▄▄ █▄▄ █▀░ █▀█ █░▀█ █▀█ ░█░ █ █▄▄".colorize(:yellow)
         puts
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
+        `say "Welcome to Football Fanatic!"`
     end
 
     def main_menu
@@ -23,7 +26,6 @@ class CLI
         puts "3. Find a game schedule for a given team".colorize(:yellow)
         puts "4. Find all games hosted by a given stadium".colorize(:yellow)
         puts "5. Exit".colorize(:yellow)
-        `say "Welcome to Football Fanatic!"`
         puts
         input = get_user_input
         if input == "1"
@@ -49,6 +51,7 @@ class CLI
             puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
             puts
             puts
+            fork{ exec 'killall', "afplay" }
             exit
         else
             puts "Invalid entry, please try again."
