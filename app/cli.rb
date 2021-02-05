@@ -4,10 +4,14 @@ require "colorize"
 class CLI
 
     def welcome
-        puts ""
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
-        puts "Welcome to the FootballFanatic app!".colorize(:yellow)
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
+        puts
+        puts
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
+        puts "
+    █▀▀ █▀█ █▀█ ▀█▀ █▄▄ ▄▀█ █░░ █░░ █▀▀ ▄▀█ █▄░█ ▄▀█ ▀█▀ █ █▀▀
+    █▀░ █▄█ █▄█ ░█░ █▄█ █▀█ █▄▄ █▄▄ █▀░ █▀█ █░▀█ █▀█ ░█░ █ █▄▄".colorize(:yellow)
+        puts
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
     end
 
     def main_menu
@@ -19,6 +23,7 @@ class CLI
         puts "3. Find a game schedule for a given team".colorize(:yellow)
         puts "4. Find all games hosted by a given stadium".colorize(:yellow)
         puts "5. Exit".colorize(:yellow)
+        `say "Welcome to Football Fanatic!"`
         puts
         input = get_user_input
         if input == "1"
@@ -38,6 +43,12 @@ class CLI
         stadium = get_user_input
         APICommunicator.gets_games_by_stadium(stadium)
         elsif input == "5"
+            puts ""
+            puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
+            puts "          Thank you for using FootballFanatic! See you again soon!".colorize(:blue)
+            puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
+            puts
+            puts
             exit
         else
             puts "Invalid entry, please try again."
