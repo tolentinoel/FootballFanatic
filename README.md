@@ -12,7 +12,7 @@ https://github.com/stephenvincentibanez/project1_songkick
 
 2) Click the "Code" drop down menu and use the SSH link to clone the repo to your local machine.(run git clone *[SSH url]* on terminal)
 
-3) Once you have it open, run the command ***git checkout master*** to get us to the master branch. Then, run ***bundle install*** to install our required gems.
+3) Once you have it open, run the command *git checkout ellaineT* to get you started with the updated branch then run ***bundle install*** to install our dependencies.
 
 4) Next we will have to seed our database. Run ***rake db:migrate*** to connect our tables to the database.
 
@@ -24,4 +24,4 @@ https://github.com/stephenvincentibanez/project1_songkick
 Demonstration video:
 https://youtu.be/Br5ldoKAH4Q
 
-**Built by Ellaine Tolentino and Stephen Ibanez.**
+**Beta version built by Ellaine Tolentino and Stephen Ibanez.**
