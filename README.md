@@ -7,7 +7,7 @@ Install instructions:
 1) Follow this link to the github repository:
 https://github.com/stephenvincentibanez/project1_songkick
 
-2) Click the "Code" drop down menu and clone the repo to your local machine.
+2) Click the "Code" drop down menu and clone the repo to your local machine. Choose SSH and run 'git clone <SSH link>' on your terminal.
 
 3) Once you have it open, run the command "git checkout master" to get us to the master branch. Then, run "bundle install" to install our required gems.
 
