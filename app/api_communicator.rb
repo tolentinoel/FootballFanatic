@@ -11,7 +11,12 @@ class APICommunicator
         response_hash = JSON.parse(response_string)
     end
 
-    def self.all_games
+    def all_games
+
+        get_main_hash["_embedded"]["events"]
+    end
+
+    def self.games_list
         response_string = RestClient.get('https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&page=0&size=50&apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0')
         response_hash = JSON.parse(response_string)
         response_hash["_embedded"]["events"].each{|event| puts event["name"]+ " ==> " + event["dates"]["start"]["localDate"] +"\n" }

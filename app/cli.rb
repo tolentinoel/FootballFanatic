@@ -34,7 +34,7 @@ class CLI
         APICommunicator.gets_stadiums_by_city(city)
         elsif input == "0"
             puts "ALL GAMES BELOW:".colorize(:yellow)
-        APICommunicator.all_games
+        APICommunicator.games_list
         elsif input == "2"
             puts "What date? Please use YYYY-MM-DD format.".colorize(:yellow)
         date = get_user_input
