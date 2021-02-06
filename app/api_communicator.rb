@@ -12,7 +12,6 @@ class APICommunicator
     end
 
     def all_games
-
         get_main_hash["_embedded"]["events"]
     end
 
@@ -20,6 +19,17 @@ class APICommunicator
         response_string = RestClient.get('https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&page=0&size=50&apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0')
         response_hash = JSON.parse(response_string)
         response_hash["_embedded"]["events"].each{|event| puts event["name"]+ " ==> " + event["dates"]["start"]["localDate"] +"\n" }
+    end
+
+    def self.stadia_list
+        
+        puts "__________________________________________".colorize(:green)
+        puts ""
+        Stadia.all.each{|s|
+            puts "......................................................................".colorize(:red)
+            puts "  #{s.name} ~~ #{s.city}" + "\n"
+        }
+
     end
 
     def self.gets_stadiums_by_city(city)
@@ -95,18 +105,24 @@ class APICommunicator
 
     def self.gets_games_by_stadium(stadium)
         if stadium_obj = Stadia.find_by(name: stadium)
-            binding.pry
+            # binding.pry
             stadium == stadium_obj["name"]
             var = Game.find_by(stadium_id: stadium_obj.id)["away_team_id"]
             away_team = Team.find_by(id: var)["name"]
             var2 = Game.find_by(stadium_id: stadium_obj.id)["home_team_id"]
             home_team = Team.find_by(id: var2)["name"]
             the_date = Game.find_by(stadium_id: stadium_obj.id)["date"]
-            puts "========================".colorize(:green)
-            puts "#{home_team} vs. #{away_team}".colorize(:green)
-            puts "#{the_date}".colorize(:green)
+            # binding.pry
+
+            if away_team != nil
+                puts "...................................................................".colorize(:green)
+                puts "  #{home_team} vs. #{away_team}".colorize(:green) + "==> #{the_date}".colorize(:orange)
+            else
+                puts "..................................................................".colorize(:green)
+                puts "  #{home_team}".colorize(:green) + " ==> #{the_date}".colorize(:red)
+            end
         else
-            puts "========================".colorize(:red)
+            puts "================================".colorize(:red)
             puts "No games found at this stadium.".colorize(:red)
         end
     end
