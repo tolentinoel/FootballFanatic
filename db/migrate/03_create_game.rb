@@ -5,7 +5,7 @@ class CreateGame < ActiveRecord::Migration[4.2]
             t.integer :home_team_id
             t.integer :away_team_id
             t.integer :stadium_id
-            t.datetime :date
+            t.string :date
         end
     end
 
