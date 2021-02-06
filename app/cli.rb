@@ -7,7 +7,6 @@ class CLI
         puts
         puts
         fork{ exec 'afplay', "lib/William_Rosati_Floating_Also.mp3" }
-        # `afplay 'lib/William_Rosati_Floating_Also.mp3'`
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
         puts "
     █▀▀ █▀█ █▀█ ▀█▀ █▄▄ ▄▀█ █░░ █░░ █▀▀ ▄▀█ █▄░█ ▄▀█ ▀█▀ █ █▀▀
@@ -21,6 +20,7 @@ class CLI
         puts ""
         puts "Please select an option.".colorize(:yellow)
         puts "========================".colorize(:green)
+        puts "0. All games".colorize(:yellow)
         puts "1. Find stadium by city".colorize(:yellow)
         puts "2. Find all games on a given date".colorize(:yellow)
         puts "3. Find a game schedule for a given team".colorize(:yellow)
@@ -32,6 +32,9 @@ class CLI
             puts "Which city?".colorize(:yellow)
         city = get_user_input
         APICommunicator.gets_stadiums_by_city(city)
+        elsif input == "0"
+            puts "ALL GAMES BELOW:".colorize(:yellow)
+        APICommunicator.all_games
         elsif input == "2"
             puts "What date? Please use YYYY-MM-DD format.".colorize(:yellow)
         date = get_user_input
@@ -51,7 +54,7 @@ class CLI
             puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
             puts
             puts
-            fork{ exec 'killall', "afplay" }
+            fork { exec 'killall', "afplay" }
             exit
         else
             puts "Invalid entry, please try again."
@@ -66,3 +69,4 @@ class CLI
 
 
 end
+
