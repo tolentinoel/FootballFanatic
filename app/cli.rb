@@ -6,7 +6,7 @@ class CLI
     def welcome
         puts
         puts
-        fork{ exec 'afplay', "lib/William_Rosati_Floating_Also.mp3" }
+        # fork{ exec 'afplay', "lib/William_Rosati_Floating_Also.mp3" }
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
         puts "
     █▀▀ █▀█ █▀█ ▀█▀ █▄▄ ▄▀█ █░░ █░░ █▀▀ ▄▀█ █▄░█ ▄▀█ ▀█▀ █ █▀▀
@@ -59,7 +59,7 @@ class CLI
             puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
             puts
             puts
-            fork { exec 'killall', "afplay" }
+            # fork { exec 'killall', "afplay" }
             exit
         else
             puts "Invalid entry, please try again."

@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 3) do
     t.integer "away_team_id"
     t.integer "stadium_id"
     t.string "date"
+    t.string "time"
   end
 
   create_table "stadia", force: :cascade do |t|
