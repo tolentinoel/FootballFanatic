@@ -22,14 +22,13 @@ class APICommunicator
     end
 
     def self.stadia_list
-        
+
         puts "__________________________________________".colorize(:green)
         puts ""
         Stadia.all.each{|s|
             puts "......................................................................".colorize(:red)
             puts "  #{s.name} ~~ #{s.city}" + "\n"
         }
-
     end
 
     def self.gets_stadiums_by_city(city)
@@ -42,6 +41,7 @@ class APICommunicator
             puts "No stadiums found in this city.".colorize(:red)
         end
     end
+
 
     def self.gets_games_by_date(date)
 
@@ -69,58 +69,102 @@ class APICommunicator
         if result = Team.find_by(name: team)
             if result.id.even? == true
                 #Is the given team the away team? If not, sends to else statement
-                # binding.pry
+                
                 away_games_obj = Game.find_by(away_team_id: result.id)
                 home_team_id = away_games_obj["home_team_id"]
                 home_team_name = Team.find_by(id: home_team_id)["name"]
                 #If I'm searching for away team results, I need to decrement the result.id by 1 so that home_game_obj != nil
                 #Code written to accomodate how the database is set up
+
                 home_games_obj = Game.find_by(home_team_id: result.id-1)
                 away_team_id = home_games_obj["away_team_id"]
                 away_team_name = Team.find_by(id: away_team_id)["name"]
                 date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
-                puts "Game Schedule".colorize(:green)
-                puts "========================".colorize(:green)
-                puts "#{date}".colorize(:green)
-                puts "#{result.name} vs. #{home_team_name}".colorize(:green)
+
+                    if home_team_name != nil
+                        puts ""
+                        puts "       EVENT SCHEDULE".colorize(:green)
+                        puts "+++===========================+++".colorize(:green)
+                        puts "         #{date}".colorize(:green)
+                        puts "  #{result.name} vs. #{home_team_name}".colorize(:green)
+
+                    else
+                        puts ""
+                        puts "         EVENT SCHEDULE".colorize(:blue)
+                        puts "+++===========================+++".colorize(:green)
+                        puts "      #{date}".colorize(:green)
+                        puts "        #{result.name}".colorize(:light_blue)
+
+                    end
 
                 else
-                home_games_obj = Game.find_by(home_team_id: result.id)
-                away_team_id = home_games_obj["away_team_id"]
-                away_team_name = Team.find_by(id: away_team_id)["name"]
-                #If I'm searching for away team results, I need to increment the result.id by 1
-                away_games_obj = Game.find_by(away_team_id: result.id+1)
-                home_team_id = away_games_obj["home_team_id"]
-                home_team_name = Team.find_by(id: home_team_id)["name"]
-                date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
-                puts "Game Schedule".colorize(:green)
-                puts "========================".colorize(:green)
-                puts "#{date}".colorize(:green)
-                puts "#{result.name} vs. #{away_team_name}".colorize(:green)
+                    home_games_obj = Game.find_by(home_team_id: result.id)
+                    away_team_id = home_games_obj["away_team_id"]
+                    away_team_name = Team.find_by(id: away_team_id)["name"]
+                    #If I'm searching for away team results, I need to increment the result.id by 1
+                    away_games_obj = Game.find_by(away_team_id: result.id+1)
+                    home_team_id = away_games_obj["home_team_id"]
+                    home_team_name = Team.find_by(id: home_team_id)["name"]
+                    date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
+
+                    if away_team_name != nil
+                        puts ""
+                        puts "        EVENT SCHEDULE".colorize(:green)
+                        puts "+++===========================+++".colorize(:green)
+                        puts "           #{date}".colorize(:green)
+                        puts "  #{result.name} vs. #{home_team_name}".colorize(:green)
+
+                    else
+                        puts ""
+                        puts "         EVENT SCHEDULE".colorize(:blue)
+                        puts "+++===========================+++".colorize(:green)
+                        puts "         #{date}".colorize(:green)
+                        puts "           #{result.name}".colorize(:light_blue)
+
+                    end
+
             end
-        else puts "========================".colorize(:red)
-            puts "No games found for this team.".colorize(:red)
+        else puts "============================================".colorize(:red)
+            puts "No games found for this team on the database.".colorize(:red)
         end
     end
 
-    def self.gets_games_by_stadium(stadium)
-        if stadium_obj = Stadia.find_by(name: stadium)
-            # binding.pry
-            stadium == stadium_obj["name"]
-            var = Game.find_by(stadium_id: stadium_obj.id)["away_team_id"]
-            away_team = Team.find_by(id: var)["name"]
-            var2 = Game.find_by(stadium_id: stadium_obj.id)["home_team_id"]
-            home_team = Team.find_by(id: var2)["name"]
-            the_date = Game.find_by(stadium_id: stadium_obj.id)["date"]
-            # binding.pry
 
-            if away_team != nil
-                puts "...................................................................".colorize(:green)
-                puts "  #{home_team} vs. #{away_team}".colorize(:green) + "==> #{the_date}".colorize(:orange)
-            else
-                puts "..................................................................".colorize(:green)
-                puts "  #{home_team}".colorize(:green) + " ==> #{the_date}".colorize(:red)
-            end
+    def self.gets_games_by_stadium(stadium)
+
+        if stadium_obj = Stadia.find_by(name: stadium)
+         
+            stadium_games = Game.all.filter{|game| game.stadium_id === stadium_obj.id}
+            home_id = stadium_games.map{|ele| ele.home_team_id}
+            away_id = stadium_games.map{|ele| ele.away_team_id}
+            the_times = stadium_games.map{|ele| ele.time}
+            the_dates = stadium_games.map{|ele| ele.date}
+
+
+                i = 0
+                while i < home_id.length || i < away_id.length do
+                    home_team = Team.all.filter{|team|
+                        team.id === home_id[i]
+                    }.map{|e| e.name}
+
+                    away_team = Team.all.filter{|team|
+                        team.id === away_id[i]
+                    }.map{|e| e.name}
+
+
+                    home_team.each{|name|
+                       
+                        if away_team[i] != nil
+                            puts "...................................................................".colorize(:red)
+                            puts "   #{name} vs. AWAY".colorize(:green) + "==> #{the_dates[i]}".colorize(:red) + " @ #{the_times[i]}".colorize(:blue)
+                        else
+                            puts "..................................................................".colorize(:red)
+                            puts "   #{name}".colorize(:green) + " ==> #{the_dates[i]}".colorize(:light_blue) + " @ #{the_times[i]}".colorize(:blue)
+                        end
+                    }
+                    i += 1
+                end
+
         else
             puts "================================".colorize(:red)
             puts "No games found at this stadium.".colorize(:red)
