@@ -20,13 +20,13 @@ class CLI
         puts ""
         puts "   Please select an option.".colorize(:yellow)
         puts "+++===========================+++".colorize(:green)
-        puts "  A. List of Stadium".colorize(:yellow)
-        puts "  0. All games".colorize(:yellow)
-        puts "  1. Find stadium by city".colorize(:yellow)
-        puts "  2. Find all games on a given date".colorize(:yellow)
-        puts "  3. Find a game schedule for a given team".colorize(:yellow)
-        puts "  4. Find all games hosted by a given stadium".colorize(:yellow)
-        puts "  5. Exit".colorize(:yellow)
+        puts "  A - List of Stadium".colorize(:yellow)
+        puts "  0 - All games".colorize(:yellow)
+        puts "  1 - Find stadium by city".colorize(:yellow)
+        puts "  2 - Find all games on a given date".colorize(:yellow)
+        puts "  3 - Find a game schedule for a given team".colorize(:yellow)
+        puts "  4 - Find all games hosted by a given stadium".colorize(:yellow)
+        puts "  5 - Exit".colorize(:yellow)
         puts
         input = get_user_input
         if input == "A"
