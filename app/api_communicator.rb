@@ -69,7 +69,7 @@ class APICommunicator
         if result = Team.find_by(name: team)
             if result.id.even? == true
                 #Is the given team the away team? If not, sends to else statement
-                
+
                 away_games_obj = Game.find_by(away_team_id: result.id)
                 home_team_id = away_games_obj["home_team_id"]
                 home_team_name = Team.find_by(id: home_team_id)["name"]
@@ -118,8 +118,8 @@ class APICommunicator
                         puts ""
                         puts "         EVENT SCHEDULE".colorize(:blue)
                         puts "+++===========================+++".colorize(:green)
-                        puts "         #{date}".colorize(:green)
-                        puts "           #{result.name}".colorize(:light_blue)
+                        puts "  #{date}".colorize(:green)
+                        puts "  #{result.name}".colorize(:light_blue)
 
                     end
 
@@ -133,13 +133,11 @@ class APICommunicator
     def self.gets_games_by_stadium(stadium)
 
         if stadium_obj = Stadia.find_by(name: stadium)
-         
             stadium_games = Game.all.filter{|game| game.stadium_id === stadium_obj.id}
             home_id = stadium_games.map{|ele| ele.home_team_id}
             away_id = stadium_games.map{|ele| ele.away_team_id}
             the_times = stadium_games.map{|ele| ele.time}
             the_dates = stadium_games.map{|ele| ele.date}
-
 
                 i = 0
                 while i < home_id.length || i < away_id.length do
@@ -153,7 +151,7 @@ class APICommunicator
 
 
                     home_team.each{|name|
-                       
+
                         if away_team[i] != nil
                             puts "...................................................................".colorize(:red)
                             puts "   #{name} vs. AWAY".colorize(:green) + "==> #{the_dates[i]}".colorize(:red) + " @ #{the_times[i]}".colorize(:blue)
