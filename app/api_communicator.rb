@@ -118,8 +118,8 @@ class APICommunicator
                         puts ""
                         puts "         EVENT SCHEDULE".colorize(:blue)
                         puts "+++===========================+++".colorize(:green)
-                        puts "         #{date}".colorize(:green)
-                        puts "           #{result.name}".colorize(:light_blue)
+                        puts "  #{date}".colorize(:green)
+                        puts "  #{result.name}".colorize(:light_blue)
 
                     end
 
