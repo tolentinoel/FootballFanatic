@@ -1,5 +1,5 @@
-FootballFanatic CLI app! - Pair Programming
-Description:
+# FootballFanatic CLI app! - Pair Programming
+#### Description:
 
 Welcome to the FootballFanatic app! This program will help keep football fans up to date with the latest game schedules.
 
@@ -19,5 +19,5 @@ Now to run the app, just run "ruby bin/run.rb" command in your terminal. You wil
 
 Demonstration video: https://youtu.be/Br5ldoKAH4Q
 
-Beta version built by Ellaine Tolentino and Stephen Ibanez.
+##### Beta version built by Ellaine Tolentino and Stephen Ibanez.
 
