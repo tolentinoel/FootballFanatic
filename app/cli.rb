@@ -6,7 +6,7 @@ class CLI
     def welcome
         puts
         puts
-        # fork{ exec 'afplay', "lib/William_Rosati_Floating_Also.mp3" }
+        fork{ exec 'afplay', "lib/William_Rosati_Floating_Also.mp3" }
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
         puts "
     █▀▀ █▀█ █▀█ ▀█▀ █▄▄ ▄▀█ █░░ █░░ █▀▀ ▄▀█ █▄░█ ▄▀█ ▀█▀ █ █▀▀
@@ -19,14 +19,14 @@ class CLI
     def main_menu
         puts ""
         puts "   Please select an option.".colorize(:yellow)
-        puts "+++===========================+++".colorize(:green)
-        puts "  A - List of Stadium".colorize(:yellow)
-        puts "  0 - All games".colorize(:yellow)
-        puts "  1 - Find stadium by city".colorize(:yellow)
-        puts "  2 - Find all games on a given date".colorize(:yellow)
-        puts "  3 - Find a game schedule for a given team".colorize(:yellow)
-        puts "  4 - Find all games hosted by a given stadium".colorize(:yellow)
-        puts "  5 - Exit".colorize(:yellow)
+        puts "+++==================================+++".colorize(:blue)
+        puts "   A - List of Stadium".colorize(:yellow)
+        puts "   0 - All games".colorize(:yellow)
+        puts "   1 - Find stadium by city".colorize(:yellow)
+        puts "   2 - Find all games on a given date".colorize(:yellow)
+        puts "   3 - Find a game schedule for a given team".colorize(:yellow)
+        puts "   4 - Find all games hosted by a given stadium".colorize(:yellow)
+        puts "   5 - Exit".colorize(:yellow)
         puts
         input = get_user_input
         if input == "A"
@@ -54,12 +54,13 @@ class CLI
             APICommunicator.gets_games_by_stadium(stadium)
         elsif input == "5"
             puts ""
-            puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
-            puts "          Thank you for using FootballFanatic! See you again soon!".colorize(:blue)
-            puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
+            puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
+            puts "            Thank you and see you again soon!".colorize(:red)
+            puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:green)
             puts
             puts
-            # fork { exec 'killall', "afplay" }
+            `say "Thank you and See you again soon!"`
+            fork { exec 'killall', "afplay" }
             exit
         else
             puts "Invalid entry, please try again."
