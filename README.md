@@ -1,7 +1,5 @@
-# FootballFanatic CLI app! - Pair Programming
 
-
-## Welcome to the FootballFanatic! 
+## Welcome to the FootballFanatic!
 This is a CLI app that displays events or football games that can be found through city name, date, team/performer name, or stadium name. This program will help you keep up with date with the latest game or event schedules of you favorite team or performer.
 
 **Tech Used:**
@@ -26,6 +24,7 @@ This is a CLI app that displays events or football games that can be found throu
 
 
 #### Demonstration video:
+
 https://www.youtube.com/watch?v=U66aECUWbTQ&t=1s
 
 **[Beta version](https://github.com/stephenvincentibanez/project1_songkick/tree/master) built by Ellaine Tolentino and Stephen Ibanez.**
