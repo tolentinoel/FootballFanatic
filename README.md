@@ -16,7 +16,7 @@ This is a CLI app that displays events or football games that can be found throu
 
 2) Click the "Code" drop down menu and use the SSH link to clone the repo to your local machine.(run git clone *[SSH url]* on terminal)
 
-3) Once you have it open, run the command ***bundle install*** to install our dependencies.
+3) Once you have it open, run the command ***git checkout ellaineT*** to use the most updated branch and then run ***bundle install*** to install our dependencies.
 
 4) Next we will have to seed our database. Run ***rake db:migrate*** to connect our tables to the database.
 
