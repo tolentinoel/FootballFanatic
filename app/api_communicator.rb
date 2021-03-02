@@ -15,14 +15,15 @@ class APICommunicator
         get_main_hash["_embedded"]["events"]
     end
 
+# <-----------------CLASS FUNCTIONS BELOW ------------------>
+
     def self.games_list
         response_string = RestClient.get('https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&page=0&size=50&apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0')
         response_hash = JSON.parse(response_string)
-        response_hash["_embedded"]["events"].each{|event| puts event["name"]+ " ==> " + event["dates"]["start"]["localDate"] +"\n" }
+        response_hash["_embedded"]["events"].each{|event| puts event["name"]+ " ==> ".colorize(:blue)+ event["dates"]["start"]["localDate"] +"\n".colorize(:orange) }
     end
 
     def self.stadia_list
-
         puts "__________________________________________".colorize(:green)
         puts ""
         Stadia.all.each{|s|
@@ -45,19 +46,40 @@ class APICommunicator
 
     def self.gets_games_by_date(date)
 
-        if  games = Game.find_by(date: date)
-            date == games["date"].to_s.delete_suffix(' 00:00:00 UTC')
-            var = Game.find_by(date: date)
-            home_team_id = Game.find_by(date: date)["home_team_id"]
-            home_team_name = Team.find_by(id: home_team_id)["name"]
-            away_team_id = Game.find_by(date: date)["away_team_id"]
-            away_team_name = Team.find_by(id: away_team_id)["name"]
-            puts "========================".colorize(:green)
+        if  games = Game.all.filter{|game| game.date === date}
+            home_id = games.map{|ele| ele.home_team_id}
+            away_id = games.map{|ele| ele.away_team_id}
+            venue_id = games.map{|ele| ele.stadium_id}
+            the_times = games.map{|ele| ele.time}
+            the_dates = games.map{|ele| ele.date}
 
-            if away_team_name != nil
-                puts "#{home_team_name} vs. #{away_team_name}".colorize(:green)
-            else
-                puts "#{home_team_name}".colorize(:blue)
+            i = 0
+            while i < home_id.length || i < away_id.length do
+                home_team = Team.all.filter{|team|
+                    team.id === home_id[i]
+                }.map{|e| e.name}
+
+                away_team = Team.all.filter{|team|
+                    team.id === away_id[i]
+                }.map{|e| e.name}
+
+                stadia = Stadia.all.filter{|v|
+                    v.id === venue_id[i]
+                }.map{|e| "#{e.name} (#{e.city})"}
+
+                j = 0
+                home_team.each{|name|
+                    if away_team[j] != nil
+                        puts "...................................................................".colorize(:red)
+                        puts "   #{name} vs. #{away_team[j]}".colorize(:green) ++ " ==> #{the_dates[i]} @ #{the_times[i]}".colorize(:light_blue) + " ==> #{stadia[j]}".colorize(:red)
+                    else
+                        puts "..................................................................".colorize(:red)
+                        puts "   #{name}".colorize(:green) + " ==> #{the_dates[i]} @ #{the_times[i]}".colorize(:light_blue) + " ==> #{stadia[j]}".colorize(:red)
+
+                    end
+                }
+                j += 1
+                i += 1
             end
         else
             puts "========================".colorize(:green)
@@ -65,67 +87,60 @@ class APICommunicator
         end
     end
 
+
     def self.gets_schedule_by_team(team)
         if result = Team.find_by(name: team)
-            if result.id.even? == true
-                #Is the given team the away team? If not, sends to else statement
+            if result != nil
+                games = Game.all.filter{|game| game.home_team_id === result.id}
+                if !games.empty?
+                    home_id = games.map{|ele| ele.home_team_id}
+                    away_id = games.map{|ele| ele.away_team_id}
+                    venue_id = games.map{|ele| ele.stadium_id}
+                    the_times = games.map{|ele| ele.time}
+                    the_dates = games.map{|ele| ele.date}
+                else 
+                    away_games = Game.all.filter{|game| game.away_team_id === result.id}
+                    home_id = away_games.map{|ele| ele.home_team_id}
+                    away_id = away_games.map{|ele| ele.away_team_id}
+                    venue_id = away_games.map{|ele| ele.stadium_id}
+                    the_times = away_games.map{|ele| ele.time}
+                    the_dates = away_games.map{|ele| ele.date}
+                end
+                
+                i = 0
+                while i < home_id.length || i < away_id.length do
+                    # FILTER TEAM DB BASED FROM ARRAY ELEMENTS
+                    home_team = Team.all.filter{|team|
+                        team.id === home_id[i]
+                    }.map{|e| e.name}
 
-                away_games_obj = Game.find_by(away_team_id: result.id)
-                home_team_id = away_games_obj["home_team_id"]
-                home_team_name = Team.find_by(id: home_team_id)["name"]
-                #If I'm searching for away team results, I need to decrement the result.id by 1 so that home_game_obj != nil
-                #Code written to accomodate how the database is set up
+                    away_team = Team.all.filter{|team|
+                        team.id === away_id[i]
+                    }.map{|e| e.name}
 
-                home_games_obj = Game.find_by(home_team_id: result.id-1)
-                away_team_id = home_games_obj["away_team_id"]
-                away_team_name = Team.find_by(id: away_team_id)["name"]
-                date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
+                    stadia = Stadia.all.filter{|v|
+                        v.id === venue_id[i]
+                    }.map{|e| "#{e.name} (#{e.city})"}
 
-                    if home_team_name != nil
-                        puts ""
-                        puts "       EVENT SCHEDULE".colorize(:green)
-                        puts "+++===========================+++".colorize(:green)
-                        puts "         #{date}".colorize(:green)
-                        puts "  #{result.name} vs. #{home_team_name}".colorize(:green)
+                    j = 0
+                    home_team.each{|name|
+                        # CHECK IF THERE'S AN AWAY TEAM ON FILTERED RESULTS (THIS IS MAKING ROOM FOR UPDATED DB THAT HAS AN AWAY TEAM-currently nil)
+                        if away_team[j] != nil
+                            puts "...................................................................".colorize(:red)
+                            puts "   #{name} vs. #{away_team[j]}".colorize(:green) + " ==> #{the_dates[i]} @ #{the_times[i]}".colorize(:light_blue) + " ==> #{stadia[j]}".colorize(:red)
+                        else
+                        # MEANS IF DATA ONLY HAS A HOME TEAM(One performer events or games with a waiting list on opponent)
+                            puts "..................................................................".colorize(:red)
+                            puts "   #{name}".colorize(:green) + " ==> #{the_dates[i]} @ #{the_times[i]}".colorize(:light_blue) + " ==> #{stadia[j]}".colorize(:red)
+                        end
+                    }
+                    j+= 1
+                    i += 1
+                end
 
-                    else
-                        puts ""
-                        puts "         EVENT SCHEDULE".colorize(:blue)
-                        puts "+++===========================+++".colorize(:green)
-                        puts "      #{date}".colorize(:green)
-                        puts "        #{result.name}".colorize(:light_blue)
-
-                    end
-
-                else
-                    home_games_obj = Game.find_by(home_team_id: result.id)
-                    away_team_id = home_games_obj["away_team_id"]
-                    away_team_name = Team.find_by(id: away_team_id)["name"]
-                    #If I'm searching for away team results, I need to increment the result.id by 1
-                    away_games_obj = Game.find_by(away_team_id: result.id+1)
-                    home_team_id = away_games_obj["home_team_id"]
-                    home_team_name = Team.find_by(id: home_team_id)["name"]
-                    date = home_games_obj.date.to_s.delete_suffix(' 00:00:00 UTC')
-
-                    if away_team_name != nil
-                        puts ""
-                        puts "        EVENT SCHEDULE".colorize(:green)
-                        puts "+++===========================+++".colorize(:green)
-                        puts "           #{date}".colorize(:green)
-                        puts "  #{result.name} vs. #{home_team_name}".colorize(:green)
-
-                    else
-                        puts ""
-                        puts "         EVENT SCHEDULE".colorize(:blue)
-                        puts "+++===========================+++".colorize(:green)
-                        puts "  #{date}".colorize(:green)
-                        puts "  #{result.name}".colorize(:light_blue)
-
-                    end
-
-            end
-        else puts "============================================".colorize(:red)
-            puts "No games found for this team on the database.".colorize(:red)
+        end
+        else puts "++=============================================++".colorize(:red)
+            puts "   No games found for this team on the database.".colorize(:red)
         end
     end
 
@@ -139,29 +154,30 @@ class APICommunicator
             the_times = stadium_games.map{|ele| ele.time}
             the_dates = stadium_games.map{|ele| ele.date}
 
-                i = 0
-                while i < home_id.length || i < away_id.length do
-                    home_team = Team.all.filter{|team|
-                        team.id === home_id[i]
-                    }.map{|e| e.name}
+            i = 0
+            while i < home_id.length || i < away_id.length do
+                home_team = Team.all.filter{|team|
+                    team.id === home_id[i]
+                }.map{|e| e.name}
 
-                    away_team = Team.all.filter{|team|
-                        team.id === away_id[i]
-                    }.map{|e| e.name}
+                away_team = Team.all.filter{|team|
+                    team.id === away_id[i]
+                }.map{|e| e.name}
 
+                j = 0
+                home_team.each{|name|
 
-                    home_team.each{|name|
-
-                        if away_team[i] != nil
-                            puts "...................................................................".colorize(:red)
-                            puts "   #{name} vs. AWAY".colorize(:green) + "==> #{the_dates[i]}".colorize(:red) + " @ #{the_times[i]}".colorize(:blue)
-                        else
-                            puts "..................................................................".colorize(:red)
-                            puts "   #{name}".colorize(:green) + " ==> #{the_dates[i]}".colorize(:light_blue) + " @ #{the_times[i]}".colorize(:blue)
-                        end
-                    }
-                    i += 1
-                end
+                    if away_team[j] != nil
+                        puts "...................................................................".colorize(:red)
+                        puts "   #{name} vs. #{away_team[j]}".colorize(:green) + "==> #{the_dates[i]}".colorize(:red) + " @ #{the_times[i]}".colorize(:blue)
+                    else
+                        puts "..................................................................".colorize(:red)
+                        puts "   #{name}".colorize(:green) + " ==> #{the_dates[i]}".colorize(:light_blue) + " @ #{the_times[i]}".colorize(:blue)
+                    end
+                }
+                j += 1
+                i += 1
+            end
 
         else
             puts "================================".colorize(:red)
