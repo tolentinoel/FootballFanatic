@@ -5,7 +5,7 @@ Description:
 Welcome to the FootballFanatic app! This program will help keep football fans up to date with the latest game schedules.
 
 
-Install instructions:
+Installation:
 
 1) Follow this link to the github repository:
 https://github.com/stephenvincentibanez/project1_songkick
@@ -22,6 +22,6 @@ https://github.com/stephenvincentibanez/project1_songkick
 
 
 Demonstration video:
-https://youtu.be/Br5ldoKAH4Q
+https://www.youtube.com/watch?v=U66aECUWbTQ&t=1s
 
-**Beta version built by Ellaine Tolentino and Stephen Ibanez.**
+**[Beta version](https://github.com/stephenvincentibanez/project1_songkick/tree/master) built by Ellaine Tolentino and Stephen Ibanez.**
