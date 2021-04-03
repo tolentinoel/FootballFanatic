@@ -14,13 +14,13 @@ This is a CLI app that displays events or football games that can be found throu
 
 2) Click the "Code" drop down menu and use the SSH link to clone the repo to your local machine.(run git clone *[SSH url]* on terminal)
 
-3) Once you have it open, run the command ***git checkout ellaineT*** to use the most updated branch and then run ***bundle install*** to install our dependencies.
+3) Once you have it open, run the command ***bundle install*** to install our dependencies.
 
 4) Next we will have to seed our database. Run ***rake db:migrate*** to connect our tables to the database.
 
 5) Run the ***rake:db seed*** command to seed our database with the first 50 events from Ticketmaster API.
 
-6) Now to run the app, just run "ruby bin/run.rb" command in your terminal. You will then be directed to the main menu of the app to start your queries. Have fun!
+6) Now to run the app, just run ***ruby bin/run.rb*** command in your terminal. You will then be directed to the main menu of the app to start your queries. Have fun!
 
 
 #### Demonstration video:
